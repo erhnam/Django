@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+
+{% block Siguiendo %} 
+
+<div class="well well-sm">
+    <div class="media">     
+        <div class="media-body center-block">
+            <h4 class="media-heading">{{seguido.user.username}}</h4>
+            <br>
+			<img src="{% if seguido.photo %}{{ MEDIA_URL }}{{ seguido.photo }}{% else %}{{ MEDIA_URL }}default.png{% endif %}" width="190" height="150">            
+			<br><br>
+			<a href="{% url 'siguiendo_a' %}"><span class="label label-warning pull-left">siguiendo a {{siguiendo.count}}</span>
+            <a href="{% url 'seguidores' %}"><span class="label label-info pull-left">{{seguido.seguidores.count}} Seguidores</a></span>
+        </div>
+    </div>
+</div>
+
+	<!-- /A quien seguir --> 
+	<ul class="list-group">
+		<li class="list-group-item Titulo">A quien seguir</li>
+        {% for elegido in elegidos %}
+		  <li class="list-group-item"><a href="usuario/{{elegido.user.username}}/{{seguido.user.username}}/">{{elegido.user.username}}</a></li>
+		{% endfor %}
+	</ul>
+
+{% endblock Siguiendo %}
+
+{% block Rumor %}
+
+	{% for rumor in Rumores %}
+
+	  <div class="list-group">
+	    	<div class="list-group-item active">
+		      <h4 class="UserProfile">{{rumor.username}}</h4>
+		      <h5 class="Rumor">{{rumor.contenido}}</h4>
+		      <p class="Fecha">{{rumor.fecha}}</p>	      
+		      <a href="fav/{{seguido.user.username}}/{{rumor.rumor_id}}/"> 
+		      <button class="btn btn-default" type="submit">
+		      <span class="glyphicon glyphicon-heart"></span>  {{rumor.num_favorito}} 
+		      </button>
+		      <a href="difundir/{{seguido.user.username}}/{{rumor.rumor_id}}/"> 
+		      <button class="btn btn-default" type="submit">
+		      <span class="glyphicon glyphicon-retweet"></span>  {{rumor.num_difusion}} 
+		      </button>
+		      </a>
+		      {% if rumor.username == seguido %}
+     		  <a href="borrar/{{rumor.rumor_id}}/"><button type="submit" class="btn btn-default">Borrar</button></a>
+     		  {% endif %}			      
+	    	</div>
+	  </div>
+
+	{% endfor %}
+
+{% endblock Rumor %}
+
+

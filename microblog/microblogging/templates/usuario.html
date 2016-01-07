@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %} Usuario {% endblock title %}
+
+{% block Siguiendo %}
+
+    <div class="well well-sm">
+        <div class="media">     
+            <div class="media-body center-block">
+                {% if seguido == True %}
+                    <h4 class="media-heading"> {{Seguidme.username}} <a href="dejar/{{Seguidme.username}}"><button type="submit" class="btn btn-default">Dejar de Seguir</button></a></h4>
+                {% else %}
+                    <h4 class="media-heading"> {{Seguidme.username}} <a href="seguir/{{Seguidme.username}}"><button type="submit" class="btn btn-default">Seguir</button></a></h4>
+                {% endif %}
+                <br>
+                <img src="{{ MEDIA_URL }}{{ Seguidme.user_profile.photo }}" width="250" height="200">
+                <br><br>
+                <span class="label label-warning pull-left">siguiendo a {{Usuarios.count}}</span>
+                <span class="label label-info pull-left">{{siguiendo.seguidores.count}} Seguidores</span>
+            </div>
+        </div>
+    </div>
+
+    <ul class="list-group">
+    <li class="list-group-item Titulo">Siguiendo</li>
+
+{% endblock Siguiendo %}
+
+{% block Rumor %}
+
+	{% for rumor in Rumores %}
+	  <div class="list-group">
+	    <div class="list-group-item active">
+	      <h4 class="UserProfile">{{rumor.username}}</h4>
+	      <h4 class="Rumor">{{rumor.contenido}}</h4>
+	      <p class="Fecha">{{rumor.fecha}}</p>
+	       <a href="fav/{{seguido.username}}/{{rumor.rumor_id}}/"> <button class="btn btn-default" type="submit">
+	       <span class="glyphicon glyphicon-heart"></span>  {{rumor.num_favorito}} 
+	       </button>
+	       <a href="difundir/{{seguido.username}}/{{rumor.rumor_id}}/"> <button class="btn btn-default" type="submit">
+	       <span class="glyphicon glyphicon-retweet"></span>  {{rumor.num_difusion}} 
+	       </button>
+	       </a>
+	    </div>
+	  </div>
+	{% endfor %}
+
+{% endblock Rumor %}
+
+{% block Seguidores %}
+
+	<ul class="list-group">
+		<li class="list-group-item Titulo">Seguidores</li>
+        {% for elegido in elegidos %}
+		  <li class="list-group-item">{{elegido.user.username}}<a href="seguir/{{elegido.user.username}}/">
+		  <ul class="botondejarseguir"><button type="submit" class="btn btn-default">seguir</button></a></li></ul>
+		{% endfor %}
+	</ul>
+	
+{% endblock Seguidores %}
+
+

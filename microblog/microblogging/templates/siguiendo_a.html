@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Siguiendo_a{% endblock title %}
+
+
+{% block Siguiendo %} 
+
+<div class="well well-sm">
+    <div class="media">     
+        <div class="media-body center-block">
+            <h4 class="media-heading">{{seguido.user.username}}</h4>
+            <br>
+			<img src="{% if seguido.photo %}{{ MEDIA_URL }}{{ seguido.photo }}{% else %}{{ MEDIA_URL }}default.png{% endif %}" width="190" height="150">            
+			<br><br>
+			<a href="{% url 'siguiendo_a' %}"><span class="label label-warning pull-left">siguiendo a {{siguiendo.count}}</span>
+            <a href="{% url 'seguidores' %}"><span class="label label-info pull-left">{{seguido.seguidores.count}} Seguidores</span>
+        </div>
+    </div>
+</div>
+
+{% endblock Siguiendo %}
+
+{% block Rumor %}
+
+    <ul class="list-group">
+    <li class="list-group-item Titulo"><h3><center>Siguiendo a</center></h3></li>
+    {% for sigo_a in siguiendo %}
+        <li class="list-group-item"><h4><a href="usuario/{{sigo_a.user.username}}/{{seguido.user.username}}/">{{sigo_a.user.username}} </h4> <img src="{{ MEDIA_URL }}{{ sigo_a.photo }}" width="80" height="80"> <a href="dejar/{{miseguidor.user}}/"><button type="submit" class="btn btn-default">Dejar de seguir</button></a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock Rumor %}
